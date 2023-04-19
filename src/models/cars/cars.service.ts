@@ -123,4 +123,8 @@ export class CarsService {
   async findCarByName(name: string) {
     return await this.carModel.findOne({ name: new RegExp(name, 'i') });
   }
+
+  async findByQuery(query: object) {
+    return await this.carModel.find(query);
+  }
 }

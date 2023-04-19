@@ -48,6 +48,17 @@ export class CarModelsService {
     }
     /* -------------- */
 
+    /* QUERY EXAMPLE */
+    const carsWithPrice = await this.carService.findByQuery({
+      name: new RegExp(make, 'i'),
+      average_price: { $exists: true },
+    });
+
+    console.log(
+      `There are ${carsWithPrice.length} ${make} cars that have the average_price prop!`,
+    );
+    /* -------------- */
+
     return { id: result.id };
   }
 
