@@ -35,6 +35,19 @@ export class CarModelsService {
 
     const result = await newCarModel.save();
 
+    /* -- EXERCISE 2 -- */
+    const totalMakeModels = await this.carModelModel.find({
+      make: new RegExp(make, 'i'),
+    });
+
+    if (totalMakeModels.length) {
+      this.carService.updateCar({
+        id: carResult.id,
+        current_models: totalMakeModels.length,
+      });
+    }
+    /* -------------- */
+
     return { id: result.id };
   }
 
