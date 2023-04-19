@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -14,6 +18,16 @@ export class CarsService {
     average_horsepower: number,
     average_price?: number,
   ) {
+    /* -- EXERCISE 1 -- */
+    const existingRecord = await this.carModel.findOne({
+      name: new RegExp(name, 'i'),
+    });
+
+    if (existingRecord) {
+      throw new ConflictException('Car name already exists');
+    }
+    /* -------------- */
+
     const newCar = new this.carModel({
       name,
       nr_of_models,
